@@ -1,5 +1,7 @@
 # circuit-auditd
 
+[![Conn3x grade](https://conn3x.org/circuits/auditd/grade.svg)](https://conn3x.org/circuits/auditd/grade)
+
 A Conn3x circuit that installs the Linux audit daemon and keeps its rules the way you wrote them. The kernel's audit system records who touched what: a change to `/etc/sudoers`, a module loaded at 3 a.m., a file read by someone who shouldn't have. auditd writes those events to `/var/log/audit/audit.log`, and `ausearch` finds them again when you need to know what happened.
 
 You pick from the rule sets the audit package itself ships, such as PCI DSS or the STIG, add rules of your own, and the circuit writes them to `/etc/audit/rules.d` and loads them on Debian, Ubuntu, Fedora and Rocky Linux alike. If the kernel turns a rule down, the apply fails and the rules that ran before go back in, so a typo never leaves a host half-audited.
