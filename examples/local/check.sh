@@ -17,7 +17,7 @@ grep -qx -- '--loginuid-immutable' $rules
 grep -q '10.2.2-priv-config-changes' $rules
 # Fedora's own audit.rules turns off syscall auditing; the circuit's
 # replaces it.
-! grep -qx -- '-a task,never' $rules
+if grep -qx -- '-a task,never' $rules; then echo "syscall auditing is still off" >&2; exit 1; fi
 systemctl is-enabled -q auditd
 
 if systemd-detect-virt -cq; then
