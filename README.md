@@ -10,7 +10,7 @@ You pick from the rule sets the audit package itself ships, such as PCI DSS or t
 
 ```hcl
 module "auditd" {
-  source = "github.com/conn3xorg/circuit-auditd?ref=v0.1.1"
+  source = "github.com/conn3xorg/circuit-auditd?ref=v0.2.0"
 
   hosts                = { web1 = "203.0.113.10", web2 = "203.0.113.11" }
   ssh_private_key_file = "~/.ssh/id_ed25519"
