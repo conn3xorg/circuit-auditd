@@ -76,6 +76,19 @@ jobs:
       - name: Check the settings, the presets and the joined rules
         working-directory: examples/local
         run: sudo podman exec -i circuit-auditd sh < check.sh
+      # Restarting the container boots systemd again. The settings, the joined
+      # rules and auditd's enablement have to come through the boot as the
+      # apply left them, and the plan has nothing to do.
+      - name: Restart the host, then check the rules again and plan
+        working-directory: examples/local
+        run: |
+          sudo podman restart circuit-auditd
+          for _ in $(seq 60); do
+            case $(sudo podman exec circuit-auditd systemctl is-system-running 2>/dev/null) in running|degraded) break ;; esac
+            sleep 1
+          done
+          sudo podman exec -i circuit-auditd sh < check.sh
+          conn3x plan -detailed-exitcode
       - name: Clean up
         if: always()
         working-directory: examples/local
